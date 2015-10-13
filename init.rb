@@ -3,8 +3,8 @@
 require_dependency 'redmine_textarea_checkboxes/hooks'
 
 Redmine::Plugin.register :redmine_textarea_checkboxes do
-	name 'Redmine Markdown Checkboxes'
-	description 'Enables checkboxes when used with Redmine Markdown Formatter'
+	name 'Redmine Textarea Checkboxes'
+	description 'Enables checkboxes in issue description text areas'
 	url 'https://github.com/farkwun/redmine_textarea_checkboxes'
 
 	author 'farkwun'
