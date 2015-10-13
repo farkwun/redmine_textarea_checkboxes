@@ -1,0 +1,52 @@
+<div id="checklistSubmit" style="visibility:hidden">
+  <%= submit_tag l(:button_submit) %>
+</div>
+
+<script type="text/javascript">
+var finaldesc = String(<%= @issue.description.to_json.html_safe%>);
+var url = String("/issues/") + String(<%= @issue.id.to_json.html_safe%>);
+
+function toggle(thetag){
+
+$("#checklistSubmit").css('visibility', 'visible');
+  var checkboxtext = String(thetag.getAttribute('data'));
+  var complete = "[ ]" + checkboxtext;
+  var whenchecked = new RegExp("x]" + checkboxtext);
+  var whenunchecked = new RegExp(" ]"+checkboxtext ,"g");
+console.log(whenunchecked);
+
+  var changetounchecked = String(" ]"+checkboxtext);
+  var changetochecked = String("x]"+checkboxtext);
+console.log(!thetag.checked);
+
+
+      if (thetag.checked){
+      finaldesc = finaldesc.replace(whenunchecked,changetochecked);
+
+        console.log(finaldesc);
+
+
+      }
+      else {
+
+      finaldesc = finaldesc.replace(whenchecked,changetounchecked);
+      console.log(finaldesc);
+
+
+       }
+}
+
+$(document).ready(function() {
+  $('#checklistSubmit').click(function(event){
+    console.log(finaldesc);
+
+    $.ajax(url,{
+     type: "PATCH",
+      data: {issue: {description: finaldesc}},
+      dataType: 'html'
+  });
+  location.reload();
+  });
+  });
+
+</script>
