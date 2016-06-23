@@ -11,7 +11,7 @@ Redmine::Plugin.register :redmine_textarea_checkboxes do
 	author_url 'https://github.com/farkwun'
 
 	version '0.0.0'
-	requires_redmine :version_or_higher => '3.0.0'
+	requires_redmine :version_or_higher => '2.6.0'
 end
 
 
