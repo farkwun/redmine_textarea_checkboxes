@@ -1,5 +1,5 @@
-<div id="checklistSubmit" style="visibility:hidden">
-  <%= submit_tag l(:button_submit) %>
+<div id="checklistSubmit" style="visibility:hidden;display:none">
+<%= submit_tag l(:button_submit) %>
 </div>
 
 <script type="text/javascript">
@@ -8,32 +8,33 @@ var url = String("/issues/") + String(<%= @issue.id.to_json.html_safe%>);
 
 function toggle(thetag){
 
-$("#checklistSubmit").css('visibility', 'visible');
+  $("#checklistSubmit").css('visibility', 'visible');
+  $("#checklistSubmit").css('display', 'block');
   var checkboxtext = String(thetag.getAttribute('data'));
   var complete = "[ ]" + checkboxtext;
   var whenchecked = new RegExp("x]" + checkboxtext);
   var whenunchecked = new RegExp(" ]"+checkboxtext ,"g");
-console.log(whenunchecked);
+  console.log(whenunchecked);
 
   var changetounchecked = String(" ]"+checkboxtext);
   var changetochecked = String("x]"+checkboxtext);
-console.log(!thetag.checked);
+  console.log(!thetag.checked);
 
 
-      if (thetag.checked){
-      finaldesc = finaldesc.replace(whenunchecked,changetochecked);
+  if (thetag.checked){
+    finaldesc = finaldesc.replace(whenunchecked,changetochecked);
 
-        console.log(finaldesc);
-
-
-      }
-      else {
-
-      finaldesc = finaldesc.replace(whenchecked,changetounchecked);
-      console.log(finaldesc);
+    console.log(finaldesc);
 
 
-       }
+  }
+  else {
+
+    finaldesc = finaldesc.replace(whenchecked,changetounchecked);
+    console.log(finaldesc);
+
+
+  }
 }
 
 $(document).ready(function() {
@@ -41,12 +42,17 @@ $(document).ready(function() {
     console.log(finaldesc);
 
     $.ajax(url,{
-     type: "PATCH",
+      type: "PUT",
       data: {issue: {description: finaldesc}},
       dataType: 'html'
+    });
+  $("#checklistSubmit").css('visibility', 'hidden');
+  $("#checklistSubmit").css('display', 'none');
+
+    // wait half a second before reloading page - otherwise, page reloads
+    // before description has been updated on server side
+//    setTimeout(function(){ location.reload(true); }, 500);
   });
-  location.reload();
-  });
-  });
+});
 
 </script>
