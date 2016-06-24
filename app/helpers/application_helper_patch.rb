@@ -12,13 +12,18 @@ module ApplicationHelperPatch
   module InstanceMethods
     def textilizable_with_checkboxes(*args)
       text = textilizable_without_checkboxes(*args).to_s
+      # TODO: nomethoderror being thrown when grab_checkboxes is called
+      # on the home screen - not sure why, since the method has been
+      # included in the application helper -- need to figure out why!
       suppress(NoMethodError) do
         text = grab_checkboxes(text)
       end
+
       text.html_safe
     end
 
     def grab_checkboxes(text)
+      input_type = 'enabled'
       unless @issue.nil?
         input_type = @issue.safe_attribute?('description') ? 'enabled' : 'disabled'
       end

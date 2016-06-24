@@ -10,30 +10,23 @@ function toggle(thetag){
 
   $("#checklistSubmit").css('visibility', 'visible');
   $("#checklistSubmit").css('display', 'block');
+
   var checkboxtext = String(thetag.getAttribute('data'));
-  var complete = "[ ]" + checkboxtext;
   var whenchecked = new RegExp("x]" + checkboxtext);
-  var whenunchecked = new RegExp(" ]"+checkboxtext ,"g");
+  var whenunchecked = new RegExp(" ]"+checkboxtext);
   console.log(whenunchecked);
 
   var changetounchecked = String(" ]"+checkboxtext);
   var changetochecked = String("x]"+checkboxtext);
   console.log(!thetag.checked);
 
-
   if (thetag.checked){
     finaldesc = finaldesc.replace(whenunchecked,changetochecked);
-
     console.log(finaldesc);
-
-
   }
   else {
-
     finaldesc = finaldesc.replace(whenchecked,changetounchecked);
     console.log(finaldesc);
-
-
   }
 }
 
@@ -44,14 +37,13 @@ $(document).ready(function() {
     $.ajax(url,{
       type: "PUT",
       data: {issue: {description: finaldesc}},
-      dataType: 'html'
+      dataType: 'json'
     });
-  $("#checklistSubmit").css('visibility', 'hidden');
-  $("#checklistSubmit").css('display', 'none');
-
-    // wait half a second before reloading page - otherwise, page reloads
+    $("#checklistSubmit").css('visibility', 'hidden');
+    $("#checklistSubmit").css('display', 'none');
+    // wait a second before reloading page - otherwise, page reloads
     // before description has been updated on server side
-//    setTimeout(function(){ location.reload(true); }, 500);
+    setTimeout(function(){ location.reload(true); }, 1000);
   });
 });
 
