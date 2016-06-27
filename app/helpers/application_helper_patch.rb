@@ -27,12 +27,16 @@ module ApplicationHelperPatch
       unless @issue.nil?
         input_type = @issue.safe_attribute?('description') ? 'enabled' : 'disabled'
       end
+      # checkboxes in table
+      text.gsub!(/<td>\[ \](.*)<\/td>/,"<td><input #{input_type} type='checkbox' onclick='toggle(this)' data='\\1'>\\1</td>")
+      text.gsub!(/<td>\[[xX*]\](.*)<\/td>/,"<td><input #{input_type} checked type='checkbox' onclick='toggle(this)'data='\\1'><font color='gray'><strike>\\1</strike></td></font>")
+
       # checkboxes as part of a list
       text.gsub!(/\[ \](.*)<\/li>\n/,"<input #{input_type} type='checkbox' onclick='toggle(this)' data='\\1'>\\1\n")
-      text.gsub!(/\[[xX*]\](.*)<\/li>\n/,"<input #{input_type} checked type='checkbox' onclick='toggle(this)'data='\\1'>\\1\n")
+      text.gsub!(/\[[xX*]\](.*)<\/li>\n/,"<input #{input_type} checked type='checkbox' onclick='toggle(this)'data='\\1'><font color='gray'><strike>\\1</strike></font>\n")
       # checkboxes on standalone lines
-      text.gsub!(/\n<p>\[ \](.*)<\/p>\n/,"<input #{input_type} type='checkbox' onclick='toggle(this)' data='\\1'>\\1\n")
-      text.gsub!(/\n<p>\[[xX*]\](.*)<\/p>\n/,"<input #{input_type} checked type='checkbox' onclick='toggle(this)'data='\\1'>\\1\n")
+      text.gsub!(/<p>\[ \](.*)<\/p>/,"<input #{input_type} type='checkbox' onclick='toggle(this)' data='\\1'>\\1")
+      text.gsub!(/<p>\[[xX*]\](.*)<\/p>/,"<input #{input_type} checked type='checkbox' onclick='toggle(this)'data='\\1'><font color='gray'><strike>\\1</strike></font>")
 
       text
     end
