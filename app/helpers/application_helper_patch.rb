@@ -28,25 +28,25 @@ module ApplicationHelperPatch
         $input_type = @issue.safe_attribute?('description') ? 'enabled' : 'disabled'
       end
       # checkboxes in table
-      text.gsub!(/<td>\[ \](.*)<\/td>/,"<td>#{un_checked_box}</td>")
-      text.gsub!(/<td>\[[xX*]\](.*)<\/td>/,"<td>#{checked_box}</td>")
+      text.gsub!(/<td>\[ \]\s(.*)<\/td>/,"<td>#{un_checked_box}</td>")
+      text.gsub!(/<td>\[[xX*]\]\s(.*)<\/td>/,"<td>#{checked_box}</td>")
 
       # checkboxes as part of a list
-      text.gsub!(/\[ \](.*)<\/li>\n/,"#{un_checked_box}\n")
-      text.gsub!(/\[[xX*]\](.*)<\/li>\n/,"#{checked_box}\n")
+      text.gsub!(/\[ \]\s(.*)<\/li>\n/,"#{un_checked_box}\n")
+      text.gsub!(/\[[xX*]\]\s(.*)<\/li>\n/,"#{checked_box}\n")
       # checkboxes on standalone lines
-      text.gsub!(/<p>\[ \](.*)<\/p>/,"#{un_checked_box}")
-      text.gsub!(/<p>\[[xX*]\](.*)<\/p>/,"#{checked_box}")
+      text.gsub!(/<p>\[ \]\s(.*)<\/p>/,"#{un_checked_box}")
+      text.gsub!(/<p>\[[xX*]\]\s(.*)<\/p>/,"#{checked_box}")
 
       text
     end
 
     def un_checked_box
-      "<input #{$input_type} type='checkbox' onclick='toggle(this)' data='\\1'>\\1"
+      "<input #{$input_type} type='checkbox' onclick='toggle(this)' data='\s\\1'>\\1</input>"
     end
 
     def checked_box
-        "<input #{$input_type} checked type='checkbox' onclick='toggle(this)'data='\\1'><font color='gray'><strike>\\1</strike></font>"
+        "<input #{$input_type} checked type='checkbox' onclick='toggle(this)'data='\s\\1'><font color='gray'><strike>\\1</strike></font></input>"
     end
 
   end

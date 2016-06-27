@@ -39,11 +39,12 @@ $(document).ready(function() {
       data: {issue: {description: finaldesc}},
       dataType: 'json'
     });
-    $("#checklistSubmit").css('visibility', 'hidden');
-    $("#checklistSubmit").css('display', 'none');
     // wait a second before reloading page - otherwise, page reloads
     // before description has been updated on server side
-    setTimeout(function(){ location.reload(true); }, 1000);
+    setTimeout(function(){
+//      $("#checklistSubmit").css('visibility', 'hidden');
+//      $("#checklistSubmit").css('display', 'none');
+      location.reload(true); }, 1000);
   });
 });
 
