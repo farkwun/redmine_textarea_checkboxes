@@ -42,11 +42,11 @@ module ApplicationHelperPatch
     end
 
     def un_checked_box
-      "<input #{$input_type} type='checkbox' onclick='toggle(this)' data='\s\\1'>\\1</input>"
+      "<label><input #{$input_type} type='checkbox' onclick='toggle(this)' data='\s\\1'>\\1</input></label>"
     end
 
     def checked_box
-        "<input #{$input_type} checked type='checkbox' onclick='toggle(this)'data='\s\\1'><font color='gray'><strike>\\1</strike></font></input>"
+        "<label><input #{$input_type} checked type='checkbox' onclick='toggle(this)'data='\s\\1'><font color='gray'><strike>\\1</strike></font></input></label>"
     end
 
   end
